@@ -30,10 +30,17 @@ class Funcionario{
     }
 }
 
-class Cliente extends Funcionario{
+class Cliente{
     constructor(nome, cpf, email, senha, nascimento){
-        super(nome, cpf, email, senha);
+        this.id = this.getId();
+        this.nome = nome;
+        this.cpf = cpf;
+        this.email = email;
+        this.senha = senha;
         this.nascimento = nascimento;
+    }
+    getId(){
+        return Math.floor(Math.random() * 1000);
     }
 }
 
@@ -47,70 +54,132 @@ class Quartos{
     }
 }
 
-const funcionarios = []
-const clientes = []
-const quartos = []
-
 class Sistema{
-    construtor(){
-        
+    construtor(){ 
+        this.funcionarios = [];
+        this.clientes = [];
+        this.quartos = [];
+        this.reservas = [];
     }
 
     inicio(){
-        console.log("Bem vindo ao sistema de reservas");
-        console.log("1 - Login");
-        console.log("2 - Cadastro");
-        console.log("3 - Sair do programa");
+        let t = true
+        while (t === true){
+            console.log("Bem vindo ao sistema de reservas");
+            console.log("1 - Login");
+            console.log("2 - Cadastro");
+            console.log("3 - Sair do programa");
+            const opcao = readline.questionInt("Digite a opcao desejada: ");
+            switch(opcao){
+                case 1:
+                    sistema.login();
+                    break;
+                case 2:
+                    this.cadastro();
+                    break;
+                case 3:
+                    console.log("Obrigado por usar o sistema de reservas");
+                    t = false;
+                    break;
+                    default:
+                        console.log("Opção inválida");
+                        break;
+                    }
+                }
+    }
+
+    ver_dados_cliente(cliente){
+        console.log("Nome: ", cliente.nome);
+        console.log("CPF: ", cliente.cpf);
+        console.log("Email: ", cliente.email);
+        console.log("Data de Nascimento: ", cliente.nascimento);
+    }
+
+    login(){
+    console.log("Quem você é?");
+    console.log("1 - Cliente");
+    console.log("2 - Funcionário"); 
+    const opcao = readline.questionInt("Digite a opção desejada: ");
+    const email = readline.question("Digite seu email: ");
+    const senha = readline.question("Digite sua senha: ");
+
+    if(opcao === 1){
+        for(let i = 0; i < this.clientes.length; i++){
+            if(this.clientes[i].email === email && this.clientes[i].senha === senha){
+                console.log("Login efetuado com sucesso");
+                console.log("Bem vindo ", this.clientes[i].nome);
+                tela_funcionario(this.clientes[i]);
+            }
+        }
+        console.log("Login inválido");
+    }
+    if(opcao === 2){
+        for(let i = 0; i < this.funcionarios.length; i++){
+            if(this.funcionarios[i].email === email && this.funcionarios[i].senha === senha){
+                console.log("Login efetuado com sucesso");
+                console.log("Bem vindo ", this.funcionarios[i].nome);
+                tela_cliente(this.funcionarios[i])
+            }
+        }
+        console.log("Login inválido");
+    }
+}
+
+cadastro(){
+    console.log("Quem você é?");
+    console.log("1 - Cliente");
+    console.log("2 - Funcionário"); 
+    const opcao = readline.questionInt("Digite a opcao desejada: ");
+    const nome = readline.question("Digite seu nome: ");
+    const cpf = readline.question("Digite seu cpf: "); 
+    const email = readline.question("Digite seu email: ");
+    const senha = readline.question("Digite sua senha: ");
+    if(opcao === 1){
+            const nascimento = readline.question("Digite sua data de nascimento: ");
+            const cliente = new Cliente(nome, cpf, email, senha, nascimento);
+            console.log(cliente);
+            sistema.clientes.push(cliente);
+        }
+    if(opcao === 2){
+            this.funcionarios.push(new Funcionario(nome, cpf, email, senha));
+            console.log(this.funcionarios);
+        }
+    }
+    
+    tela_funcionario(funcionario){
+        console.log("1 - Ver meus Dados")
+        console.log("2 - Ver Lista de Quartos")
+        console.log("3 - Ver Lista de Clientes");
+        console.log("4 - Ver Lista de Reservas");
+        console.log("5 - Mudar status da reserva (pendente, adiada, realizada, cancelada");
+        console.log("6 - Sair do programa");
         const opcao = readline.questionInt("Digite a opcao desejada: ");
         switch(opcao){
             case 1:
-                sistema.login(funcionarios, clientes);
+                sistema.ver_dados_funcionario(funcionario);
                 break;
             case 2:
-                sistema.cadastro()
+                sistema.ver_lista_quartos(quartos);
                 break;
             case 3:
+                sistema.ver_lista_clientes(clientes);
+                break;
+            case 4:
+                sistema.ver_lista_reservas(reservas);
+                break;
+            case 5:
+                sistema.mudar_status_reserva(reservas);
+                break;
+            case 6:
                 console.log("Obrigado por usar o sistema de reservas");
-                return
+                break;
             default:
                 console.log("Opção inválida");
                 break;
         }
     }
 
-    login(funcionarios, clientes){
-        console.log("Quem você é?");
-        console.log("1 - Cliente");
-        console.log("2 - Funcionário"); 
-        const opcao = readline.questionInt("Digite a opção desejada: ");
-        const nome = readline.question("Digite seu nome: ");
-        const cpf = readline.question("Digite seu cpf: "); 
-        const email = readline.question("Digite seu email: ");
-        const senha = readline.question("Digite sua senha: ");
-
-        if(opcao === 1){
-            const nascimento = prompt("Digite sua data de nascimento: ");
-            for(i = 0; i < clientes.length; i++){
-                if(clientes[i].email === email && clientes[i].senha === senha){
-                    console.log("Login efetuado com sucesso");
-                    console.log("Bem vindo ", clientes[i].nome);
-                    sistema.tela_funcionario(clientes[i]);
-                }
-            }
-            console.log("Login inválido");
-        }
-        if(opcao === 2){
-            for(i = 0; i < funcionarios.length; i++){
-                if(funcionarios[i].email === email && funcionarios[i].senha === senha){
-                    console.log("Login efetuado com sucesso");
-                    console.log("Bem vindo ", funcionarios[i].nome);
-                    sistema.tela_cliente(funcionarios[i])
-                }
-            }
-            console.log("Login inválido");
-        }
-    }
-
+    
     tela_cliente(cliente){
         console.log("1 - Ver meus Dados")
         console.log("2 - Ver Lista de Quartos")
@@ -144,13 +213,6 @@ class Sistema{
         }
     }
 
-    
-    ver_dados_cliente(cliente){
-        console.log("Nome: ", cliente.nome);
-        console.log("CPF: ", cliente.cpf);
-        console.log("Email: ", cliente.email);
-        console.log("Data de Nascimento: ", cliente.nascimento);
-    }
 
     ver_lista_quartos(quartos){
         for(i = 0; i < quartos.length; i++){
@@ -197,61 +259,6 @@ class Sistema{
                 console.log("Data de saída: ", reservas[i].data_saida);
             }}
         }
-        
-    cadastro(){
-        console.log("Quem você é?");
-        console.log("1 - Cliente");
-        console.log("2 - Funcionário"); 
-        const opcao = readline.questionInt("Digite a opcao desejada: ");
-        const nome = readline.question("Digite seu nome: ");
-        const cpf = readline.question("Digite seu cpf: "); 
-        const email = readline.question("Digite seu email: ");
-        const senha = readline.question("Digite sua senha: ");
-        if(opcao === 1){
-                const nascimento = readline.question("Digite sua data de nascimento: ");
-                const cliente = new Cliente(nome, cpf, email, senha, nascimento);
-                console.log(cliente)
-                sistema.inicio()
-            }
-        if(opcao === 2){
-                const funcionario = new Funcionario(nome, cpf, email, senha);
-                funcionarios.push(funcionario);
-                sistema.inicio()
-            }
-    }
-
-    tela_funcionario(funcionario){
-        console.log("1 - Ver meus Dados")
-        console.log("2 - Ver Lista de Quartos")
-        console.log("3 - Ver Lista de Clientes");
-        console.log("4 - Ver Lista de Reservas");
-        console.log("5 - Mudar status da reserva (pendente, adiada, realizada, cancelada");
-        console.log("6 - Sair do programa");
-        const opcao = readline.questionInt("Digite a opcao desejada: ");
-        switch(opcao){
-            case 1:
-                sistema.ver_dados_funcionario(funcionario);
-                break;
-            case 2:
-                sistema.ver_lista_quartos(quartos);
-                break;
-            case 3:
-                sistema.ver_lista_clientes(clientes);
-                break;
-            case 4:
-                sistema.ver_lista_reservas(reservas);
-                break;
-            case 5:
-                sistema.mudar_status_reserva(reservas);
-                break;
-            case 6:
-                console.log("Obrigado por usar o sistema de reservas");
-                break;
-            default:
-                console.log("Opção inválida");
-                break;
-        }
-    }
 
     ver_dados_funcionario(funcionario){
         console.log("ID: ", funcionario.id);
@@ -297,9 +304,8 @@ class Sistema{
             }
         }
     }
-
-    
 }
+
 
 const sistema = new Sistema()
 sistema.inicio()
