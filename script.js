@@ -1,3 +1,4 @@
+const readline = require("readline-sync")
 
 class Reserva{
     construtor(id_cliente, status, data_entrada, data_saida){
