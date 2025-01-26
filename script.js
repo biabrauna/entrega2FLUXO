@@ -207,6 +207,7 @@ class Sistema{
                 break;
             case 6:
                 console.log("Obrigado por usar o sistema de reservas");
+                t = false
                 break;
             default:
                 console.log("Opção inválida");
