@@ -105,7 +105,7 @@ class Sistema {
             console.log("1 - Login");
             console.log("2 - Cadastro");
             console.log("3 - Sair do programa");
-            const opcao = readline.questionInt("Digite a opção desejada: ");
+            const opcao = readline.questionInt("Digite a opcao desejada: ");
             console.log("-----------------------------------------------------------------");
             switch (opcao) {
                 case 1:
@@ -119,7 +119,7 @@ class Sistema {
                     t = false; // Encerra o loop
                     break;
                 default:
-                    console.log("Opção inválida");
+                    console.log("Opção invalida");
                     break;
             }
         }
@@ -131,6 +131,7 @@ class Sistema {
         console.log("Nome: ", cliente.nome);
         console.log("CPF: ", cliente.cpf);
         console.log("Email: ", cliente.email);
+        console.log("Senha: ", cliente.senha);
         console.log("Data de Nascimento: ", cliente.nascimento);
         console.log("-----------------------------------------------------------------");
     }
@@ -165,7 +166,7 @@ class Sistema {
         console.log("Quem você é?");
         console.log("1 - Cliente");
         console.log("2 - Funcionário");
-        const opcao = readline.questionInt("Digite a opção desejada: ");
+        const opcao = readline.questionInt("Digite a opcao desejada: ");
         const email = readline.question("Digite seu email: ");
         const senha = readline.question("Digite sua senha: ");
 
@@ -231,8 +232,8 @@ class Sistema {
             console.log("5 - Ver Lista de Clientes");
             console.log("6 - Ver Lista de Reservas");
             console.log("7 - Mudar status da reserva");
-            console.log("8 - Voltar para o menu de início");
-            const opcao = readline.questionInt("Digite a opção desejada: ");
+            console.log("8 - Voltar para o menu de inicio");
+            const opcao = readline.questionInt("Digite a opcao desejada: ");
             console.log("-----------------------------------------------------------------");
             switch (opcao) {
                 case 1:
@@ -261,7 +262,7 @@ class Sistema {
                     t = false;
                     break;
                 default:
-                    console.log("Opção inválida");
+                    console.log("Opcao invalida");
                     break;
             }
         }
@@ -312,7 +313,7 @@ class Sistema {
                 t = false;
                 break;
             default:
-                console.log("Opção inválida");
+                console.log("Opcao invalida");
                 break;
             }
             }
@@ -363,7 +364,12 @@ class Sistema {
     visualizar_avaliacoes(){
         for(let i = 0; i < this.quartos.length; i++){
             console.log("Quarto: ", this.quartos[i].nome);
-            console.log("Avaliacao: ", this.quartos[i].avaliacao);
+            if(this.quartos[i].avaliacao != 0){
+                console.log("Avaliacoes: ", this.quartos[i].avaliacao);
+            }
+            else{
+                console.log("Nenhuma avaliacao encontrada");
+            }
             console.log("-----------------------------------------------------------------");
         }
     }
